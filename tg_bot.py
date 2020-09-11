@@ -58,7 +58,7 @@ def handle_message(message):
                 bot.send_message(message.chat.id, "Смотри, чё есть!")
                 s1, s2, s3 = 'data/style/1.jpg', 'data/style/2.jpg', 'data/style/3.jpg'
                 s4, s5, s6 = 'data/style/4.jpg', 'data/style/5.jpg', 'data/style/6.jpg'
-                s7, s8, s9 = 'data/style/4.jpg', 'data/style/5.jpg', 'data/style/6.jpg'
+                s7, s8, s9 = 'data/style/7.jpg', 'data/style/8.jpg', 'data/style/9.jpg'
                 __send_photo(chat_id=message.chat.id, photo_path=s1, msg="#1")
                 __send_photo(chat_id=message.chat.id, photo_path=s2, msg="#2")
                 __send_photo(chat_id=message.chat.id, photo_path=s3, msg="#3")
@@ -182,7 +182,7 @@ def handle_message(message):
                     out_path = f'data/out/{ses.content_img_path}'
                     # само тело ответа
                     bot.send_message(message.chat.id, "Окей бро, обрабатываю!")
-                    Model.inference(content_path=content_path, style_path=style_path, out_path=out_path, imsize=256)
+                    Model.inference(content_path=content_path, style_path=style_path, out_path=out_path, imsize=ses.size)
                     bot.send_message(message.chat.id, "Смотри, что у нас вышло!")
                     __send_photo(chat_id=message.chat.id, photo_path=out_path, msg="Кул?!")
             else:
