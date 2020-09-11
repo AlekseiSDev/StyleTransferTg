@@ -57,10 +57,19 @@ def handle_message(message):
             if message.text == 'Ок, го выберем стили для моего шедевра!':
                 bot.send_message(message.chat.id, "Смотри, чё есть!")
                 s1, s2, s3 = 'data/style/1.jpg', 'data/style/2.jpg', 'data/style/3.jpg'
+                s4, s5, s6 = 'data/style/4.jpg', 'data/style/5.jpg', 'data/style/6.jpg'
+                s7, s8, s9 = 'data/style/4.jpg', 'data/style/5.jpg', 'data/style/6.jpg'
                 __send_photo(chat_id=message.chat.id, photo_path=s1, msg="#1")
                 __send_photo(chat_id=message.chat.id, photo_path=s2, msg="#2")
                 __send_photo(chat_id=message.chat.id, photo_path=s3, msg="#3")
+                __send_photo(chat_id=message.chat.id, photo_path=s4, msg="#4")
+                __send_photo(chat_id=message.chat.id, photo_path=s5, msg="#5")
+                __send_photo(chat_id=message.chat.id, photo_path=s6, msg="#6")
+                __send_photo(chat_id=message.chat.id, photo_path=s7, msg="#7")
+                __send_photo(chat_id=message.chat.id, photo_path=s8, msg="#8")
+                __send_photo(chat_id=message.chat.id, photo_path=s9, msg="#9")
 
+            # TODO: styles to func
             elif message.text == '#1':
                 ses.style_img_path = '1.jpg'
                 if ses.content_img_path is not None:
@@ -81,6 +90,60 @@ def handle_message(message):
 
             elif message.text == '#3':
                 ses.style_img_path = '3.jpg'
+                if ses.content_img_path is not None:
+                    ses.state = 3
+                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
+                else:
+                    ses.state = 2
+                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+
+            elif message.text == '#4':
+                ses.style_img_path = '4.jpg'
+                if ses.content_img_path is not None:
+                    ses.state = 3
+                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
+                else:
+                    ses.state = 2
+                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+
+            elif message.text == '#5':
+                ses.style_img_path = '5.jpg'
+                if ses.content_img_path is not None:
+                    ses.state = 3
+                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
+                else:
+                    ses.state = 2
+                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+
+            elif message.text == '#6':
+                ses.style_img_path = '6.jpg'
+                if ses.content_img_path is not None:
+                    ses.state = 3
+                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
+                else:
+                    ses.state = 2
+                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+
+            elif message.text == '#7':
+                ses.style_img_path = '7.jpg'
+                if ses.content_img_path is not None:
+                    ses.state = 3
+                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
+                else:
+                    ses.state = 2
+                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+
+            elif message.text == '#8':
+                ses.style_img_path = '8.jpg'
+                if ses.content_img_path is not None:
+                    ses.state = 3
+                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
+                else:
+                    ses.state = 2
+                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+
+            elif message.text == '#9':
+                ses.style_img_path = '9.jpg'
                 if ses.content_img_path is not None:
                     ses.state = 3
                     bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
