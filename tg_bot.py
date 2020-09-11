@@ -151,6 +151,12 @@ def handle_message(message):
                     ses.state = 2
                     bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
 
+            elif message.text[:5] == 'size=':
+                # получим число
+                size = int(message.text[5:])
+                ses.size = size
+                bot.send_message(message.chat.id, "Размер выходной картинки выставлен, бро!")
+
             elif message.text == "Загружу фотку, которую хочу превратить в шедевр!":
                 if ses.state == 0:
                     bot.send_message(message.chat.id, "Бро, сначала глянь на стили и выбери поинтересней!")
