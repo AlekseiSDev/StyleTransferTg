@@ -13,9 +13,8 @@ bot.sessions = {}
 @bot.message_handler(commands=['start'])
 def welcome(message):
     """
-    handler for start command
-    :param message:
-    :return:
+    handler for start command/ print hello messages
+    :param message: message obj
     """
 
     ses = Session(message.chat.id)
@@ -44,10 +43,10 @@ def handle_message(message):
     :param message:
     :return:
     """
-    # подхватим сессию с этим человечком
+    # get session
     ses = bot.sessions.get(message.chat.id, None)
 
-    # если сессия с юзером не начата - попросим пройти по пайплайну
+    # if session is not started - ask for /start
     if ses is None:
         bot.send_message(message.chat.id, "Бро, мы незнакомы, предлагаю начать с команды /start!")
 
@@ -56,100 +55,25 @@ def handle_message(message):
         if message.chat.type == 'private':
             if message.text == 'Ок, го выберем стили для моего шедевра!':
                 bot.send_message(message.chat.id, "Смотри, чё есть!")
-                s1, s2, s3 = 'data/style/1.jpg', 'data/style/2.jpg', 'data/style/3.jpg'
-                s4, s5, s6 = 'data/style/4.jpg', 'data/style/5.jpg', 'data/style/6.jpg'
-                s7, s8, s9 = 'data/style/7.jpg', 'data/style/8.jpg', 'data/style/9.jpg'
-                __send_photo(chat_id=message.chat.id, photo_path=s1, msg="#1")
-                __send_photo(chat_id=message.chat.id, photo_path=s2, msg="#2")
-                __send_photo(chat_id=message.chat.id, photo_path=s3, msg="#3")
-                __send_photo(chat_id=message.chat.id, photo_path=s4, msg="#4")
-                __send_photo(chat_id=message.chat.id, photo_path=s5, msg="#5")
-                __send_photo(chat_id=message.chat.id, photo_path=s6, msg="#6")
-                __send_photo(chat_id=message.chat.id, photo_path=s7, msg="#7")
-                __send_photo(chat_id=message.chat.id, photo_path=s8, msg="#8")
-                __send_photo(chat_id=message.chat.id, photo_path=s9, msg="#9")
+                paths, msgs = [], []
+                for i in range(1, 10):
+                    paths.append(f'data/style/{i}.jpg')
+                    msgs.append(f'#{i}')
+                __send_photos(chat_id=message.chat.id, photo_paths=paths, msgs=msgs)
 
-            # TODO: styles to func
-            elif message.text == '#1':
-                ses.style_img_path = '1.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#2':
-                ses.style_img_path = '2.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#3':
-                ses.style_img_path = '3.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#4':
-                ses.style_img_path = '4.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#5':
-                ses.style_img_path = '5.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#6':
-                ses.style_img_path = '6.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#7':
-                ses.style_img_path = '7.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#8':
-                ses.style_img_path = '8.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
-
-            elif message.text == '#9':
-                ses.style_img_path = '9.jpg'
-                if ses.content_img_path is not None:
-                    ses.state = 3
-                    bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
-                else:
-                    ses.state = 2
-                    bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+            elif message.text[0] == '#':
+                try:
+                    style_code = int(message.text[1:])
+                    # TODO: проверка, что входит в заданный диапазон стилей
+                    ses.style_img_path = f'{style_code}.jpg'
+                    if ses.content_img_path is not None:
+                        ses.state = 3
+                        bot.send_message(message.chat.id, "Стиль выставлен, фотка есть, го творить!")
+                    else:
+                        ses.state = 2
+                        bot.send_message(message.chat.id, "Стиль выставлен, можно грузить фотку!")
+                except Exception:
+                    bot.send_message(message.chat.id, "Я не понимаю, выбери плз стиль, написал #n, где n замени на число от 1 до 9!")
 
             elif message.text[:5] == 'size=':
                 # получим число
@@ -182,7 +106,8 @@ def handle_message(message):
                     out_path = f'data/out/{ses.content_img_path}'
                     # само тело ответа
                     bot.send_message(message.chat.id, "Окей бро, обрабатываю!")
-                    Model.inference(content_path=content_path, style_path=style_path, out_path=out_path, imsize=ses.size)
+                    Model.inference(content_path=content_path, style_path=style_path, out_path=out_path,
+                                    imsize=ses.size)
                     bot.send_message(message.chat.id, "Смотри, что у нас вышло!")
                     __send_photo(chat_id=message.chat.id, photo_path=out_path, msg="Кул?!")
             else:
@@ -191,6 +116,11 @@ def handle_message(message):
 
 @bot.message_handler(content_types=['photo'])
 def __handle_get_photo(message):
+    """
+    handle user photo. if it's good state - download photo, if not - ask for another commands
+    :param message:
+    :return:
+    """
     ses = bot.sessions.get(message.chat.id, None)
     if ses is None:
         bot.send_message(message.chat.id, "Бро, мы незнакомы, предлагаю начать с команды /start!")
@@ -217,9 +147,32 @@ def __handle_get_photo(message):
             bot.send_message(message.chat.id, "Принято бро!")
 
 
-def __send_photo(chat_id, msg, photo_path):
+def __send_photos(chat_id, photo_paths, msgs=None):
+    """
+    send list of photos to chat with cover messages
+    :param chat_id: chat u want to send
+    :param photo_paths: list, each = path to photo
+    :param msgs: list, each = cover msg for photo at photo_paths
+    :return:
+    """
+    if msgs is None:
+        for i in range(0, len(photo_paths)):
+            __send_photo(chat_id=chat_id, photo_path=photo_paths[i])
+    else:
+        for i in range(0, len(photo_paths)):
+            __send_photo(chat_id=chat_id, msg=msgs[i], photo_path=photo_paths[i])
+
+
+def __send_photo(chat_id, photo_path, msg=None):
+    """
+    :param chat_id: chat u want to send
+    :param photo_path: path to photo
+    :param msg: cover msg
+    :return:
+    """
     ex_1 = open(photo_path, 'rb')
-    bot.send_message(chat_id, msg)
+    if msg is not None:
+        bot.send_message(chat_id, msg)
     bot.send_photo(chat_id, photo=ex_1)
 
 
