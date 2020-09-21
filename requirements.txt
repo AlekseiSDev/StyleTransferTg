@@ -19,7 +19,7 @@ networkx==2.4
 numpy
 olefile==0.46
 pandas==1.1.0
-Pillow
+Pillow~=7.2.0
 pylint==2.6.0
 pyparsing==2.4.7
 pyTelegramBotAPI==3.7.2
@@ -40,3 +40,5 @@ torchvision==0.7.0
 typed-ast==1.4.1
 wincertstore==0.2
 wrapt==1.12.1
+
+staff~=0.0.1
