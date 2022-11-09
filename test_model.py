@@ -1,6 +1,6 @@
 import model
 
-# TODO: файлик для тестирования модели
+# файлик для тестирования модели
 def test_model(model, style, content, out):
     style_path = f"data/style/{style}"
     content_path = f"data/content/{content}"

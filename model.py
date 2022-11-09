@@ -110,25 +110,11 @@ class Model():
     def __init__(self, cnn=None, normalization_mean=None, normalization_std=None, content_layers=None,
                  style_layers=None):
         # TODO: инициализируем всякое дерьмище, если оно не было передано в конструктор. Навести красоту
-        if cnn is None:
-            cnn = models.vgg19(pretrained=True).features.to(device).eval()
-        self.cnn = cnn
-
-        if normalization_mean is None:
-            normalization_mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
-        self.cnn_normalization_mean = normalization_mean
-
-        if normalization_std is None:
-            normalization_std = torch.tensor([0.229, 0.224, 0.225]).to(device)
-        self.cnn_normalization_std = normalization_std
-
-        if content_layers is None:
-            content_layers = ['conv_4']
-        self.content_layers_default = content_layers
-
-        if style_layers is None:
-            style_layers = ['conv_1', 'conv_2', 'conv_3', 'conv_4', 'conv_5']
-        self.style_layers_default = style_layers
+        self.cnn = cnn if cnn is not None else models.vgg19(pretrained=True).features.to(device).eval()
+        self.cnn_normalization_mean = normalization_mean if normalization_mean is not None else torch.tensor([0.485, 0.456, 0.406]).to(device)
+        self.cnn_normalization_std = normalization_std if normalization_std is not None else torch.tensor([0.229, 0.224, 0.225]).to(device)
+        self.content_layers_default = content_layers if content_layers is not None else ['conv_4']
+        self.style_layers_default = style_layers if style_layers is not None else ['conv_1', 'conv_2', 'conv_3', 'conv_4', 'conv_5']
 
     # TODO: перетащить в конфиг/иные области, откуда таскать
     # cnn_normalization_mean = torch.tensor([0.485, 0.456, 0.406]).to(device)
@@ -155,7 +141,7 @@ class Model():
         """Run the style transfer."""
         if not silent:
             print('Building the style transfer model..')
-        model, style_losses, content_losses = self.__get_style_model_and_losses(self.cnn, style_img, content_img)
+        model, style_losses, content_losses = self.__get_style_model_and_losses(style_img, content_img)
         optimizer = Model.__get_input_optimizer(input_img)
 
         if not silent:
@@ -217,7 +203,7 @@ class Model():
         cnn = copy.deepcopy(self.cnn)
 
         # normalization module
-        normalization = Normalization(self.normalization_mean, self.normalization_std).to(device)
+        normalization = Normalization(self.cnn_normalization_mean, self.cnn_normalization_std).to(device)
 
         # just in order to have an iterable access to or list of content/syle
         # losses
@@ -249,21 +235,20 @@ class Model():
 
             model.add_module(name, layer)
 
-            if name in self.content_layers:
+            if name in self.content_layers_default:
                 # add content loss:
                 target = model(content_img).detach()
                 content_loss = ContentLoss(target)
                 model.add_module("content_loss_{}".format(i), content_loss)
                 content_losses.append(content_loss)
 
-            if name in self.style_layers:
+            if name in self.style_layers_default:
                 # add style loss:
                 target_feature = model(style_img).detach()
                 style_loss = StyleLoss(target_feature)
                 model.add_module("style_loss_{}".format(i), style_loss)
                 style_losses.append(style_loss)
 
-        # now we trim off the layers after the last content and style losses
         # выбрасываем все уровни после последенего styel loss или content loss
         for i in range(len(model) - 1, -1, -1):
             if isinstance(model[i], ContentLoss) or isinstance(model[i], StyleLoss):
