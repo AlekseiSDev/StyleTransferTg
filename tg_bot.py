@@ -1,4 +1,5 @@
 import telebot as tb
+import os
 import config
 from session import Session
 import model
@@ -155,4 +156,13 @@ def __send_photo(chat_id, msg, photo_path):
 
 
 # RUN
-bot.polling(none_stop=True)
+if __name__ == "__main__":
+    bot.polling(none_stop=True)
+    # TODO: create dirs
+    if not os.path.isdir("data/content"):
+        os.mkdir("data/content")
+    if not os.path.isdir("data/input"):
+        os.mkdir("data/input")
+    if not os.path.isdir("data/out"):
+        os.mkdir("data/out")
+
